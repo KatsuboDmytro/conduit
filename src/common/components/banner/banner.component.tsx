@@ -1,5 +1,6 @@
 import { FC } from 'react';
 import { Container } from '../index';
+
 interface BannerProps {}
 
 export const Banner: FC<BannerProps> = () => {
