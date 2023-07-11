@@ -1,6 +1,6 @@
 import { createApi } from '@reduxjs/toolkit/query/react'
 import { axiosBaseQuery } from '../../../core/axios-base-query'
-import { GlobalFeedInDTO } from './dto/global-feed.in';
+import { FeedArticle, GlobalFeedInDTO } from './dto/global-feed.in';
 import { FEED_PAGE_SIZE } from '../consts';
 import { PopularTagsInDTO } from './dto/popular-tags.in';
 
@@ -9,11 +9,16 @@ interface GlobalFeedParams {
   tag: string | null;
 }
 
+export interface FeedData {
+  articles: FeedArticle[];
+  articlesCount: number;
+}
+
 export const feedApi = createApi({
   reducerPath: 'feedApi',
   baseQuery: axiosBaseQuery({ baseUrl: 'https://api.realworld.io/api/' }),
   endpoints: (builder) => ({
-    getGlobalFeed: builder.query<GlobalFeedInDTO, GlobalFeedParams>({
+    getGlobalFeed: builder.query<FeedData, GlobalFeedParams>({
       query: ({ page, tag }) => ({
         url: '/articles', 
         method: 'get',
@@ -23,6 +28,12 @@ export const feedApi = createApi({
           tag,
         }
       }),
+      transformResponse: (response: GlobalFeedInDTO) => {
+        return {
+          articles: response.articles || [],
+          articlesCount: response.articlesCount || 0,
+        }
+      }
     }),
     getPopularTags: builder.query<PopularTagsInDTO, any>({
       query: () => ({
