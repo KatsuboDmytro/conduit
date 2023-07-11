@@ -1,14 +1,15 @@
 import { FC } from 'react';
-import { Banner } from '../../../common/components';
-import { Feed } from '../components';
+import { Banner, Container } from '../../../common/components';
+import { Feed, FeedToggle, TagCloud } from '../components';
 import { useSearchParams } from 'react-router-dom';
 import { useGetGlobalFeedQuery } from '../api/repository';
+import { usePageParam } from '../hooks/use-page-param.hook';
 
 interface GlobalFeedPageProps {}
 
 export const GlobalFeedPage: FC<GlobalFeedPageProps> = () => {
   const [searchParams] = useSearchParams();
-  const page = searchParams.get('page') ? Number(searchParams.get('page')) : 0;
+  const { page } = usePageParam();
   const { data, error, isLoading, isFetching } = useGetGlobalFeedQuery({ 
     page,
     tag: searchParams.get('tag'),
@@ -17,7 +18,22 @@ export const GlobalFeedPage: FC<GlobalFeedPageProps> = () => {
   return (
     <>
       <Banner />
-      <Feed data={data} error={error} isLoading={isLoading} isFetching={isFetching} />
+      <Container>
+        <FeedToggle/>
+        <div className="flex">
+          <div className="w-3/4">
+            <Feed 
+              data={data} 
+              isLoading={isLoading} 
+              isFetching={isFetching} 
+              error={error}
+            />
+          </div>
+          <div className="w-1/4 pl-3">
+            <TagCloud />
+          </div>
+        </div>
+      </Container>
     </>
   )
 }
