@@ -14,12 +14,13 @@ export const feedApi = createApi({
   baseQuery: axiosBaseQuery({ baseUrl: 'https://api.realworld.io/api/' }),
   endpoints: (builder) => ({
     getGlobalFeed: builder.query<GlobalFeedInDTO, GlobalFeedParams>({
-      query: ({ page }) => ({
+      query: ({ page, tag }) => ({
         url: '/articles', 
         method: 'get',
         params: {
           limit: FEED_PAGE_SIZE,
           offset: page + FEED_PAGE_SIZE,
+          tag,
         }
       }),
     }),
