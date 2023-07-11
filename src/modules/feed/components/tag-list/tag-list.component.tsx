@@ -25,7 +25,7 @@ export const TagList: FC<TagListProps> = ({ list, itemStyle = TagListStyle.LIGHT
   return (
     <ul className='flex flex-wrap'>
       {list.map(tag => {
-        return itemAs === 'a' ? (
+        return itemAs === 'li' ? (
           <li className={itemClasses} key={tag}>{tag}</li>
         ) : (
           <Link to={`/?tag=${tag}`} className={itemClasses} key={tag}>{tag}</Link>
