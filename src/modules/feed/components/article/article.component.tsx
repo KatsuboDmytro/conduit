@@ -37,7 +37,7 @@ export const Article: FC<ArticleProps> = ({ author, createdAt, favoritesCount, t
           </p>
           <div className="flex justify-between">
             <span className='text-conduit-gray text-date font-light'>Read more...</span>
-            <TagList list={tagList}/>
+            <TagList list={tagList} itemStyle='LIGHT' />
           </div>
         </Link>
       </div>

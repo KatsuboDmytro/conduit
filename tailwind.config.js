@@ -34,6 +34,9 @@ module.exports = {
           darkenGray: '#999',
           darkestGray: '#373a3c',
           red: '#B85C5C',
+          tagCloud: '#f3f3f3',
+          tagItemBg: '#818a91',
+          tagItemBgDarken: '#687877',
         },
       },
       spacing: {

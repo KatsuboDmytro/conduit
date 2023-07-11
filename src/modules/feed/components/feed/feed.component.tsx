@@ -1,6 +1,6 @@
 import { FC, useState } from 'react';
 import ReactPaginate from 'react-paginate';
-import { ArticleList, FeedToggle } from '../index';
+import { ArticleList, FeedToggle, TagCloud } from '../index';
 import { Container } from '../../../../common/components';
 import { useGetGlobalFeedQuery } from '../../api/repository';
 import { FEED_PAGE_SIZE } from '../../consts';
@@ -17,7 +17,10 @@ export const Feed: FC<FeedProps> = () => {
     setSearchParams(serializeSearchParams({ page: String(selected) }));
   }
 
-  const { data, error, isLoading, isFetching } = useGetGlobalFeedQuery({ page });
+  const { data, error, isLoading, isFetching } = useGetGlobalFeedQuery({ 
+    page,
+    tag: searchParams.get('tag'),
+  });
 
   if(isLoading || isFetching){
     return (
@@ -58,7 +61,9 @@ export const Feed: FC<FeedProps> = () => {
             />
           </nav>
         </div>
-        <div className='w-1/4'>tags</div>
+        <div className='w-1/4'>
+          <TagCloud />
+        </div>
       </div>
     </Container>
   )
