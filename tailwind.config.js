@@ -39,6 +39,7 @@ module.exports = {
           tagCloud: '#f3f3f3',
           tagItemBg: '#818a91',
           tagItemBgDarken: '#687877',
+          1100: '#333',
         },
       },
       spacing: {
