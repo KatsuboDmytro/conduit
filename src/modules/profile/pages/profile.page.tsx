@@ -1,10 +1,12 @@
 import { FC } from 'react';
-import { ProfileBanner } from '../components/profile-banner/profile-banner.component';
-import { Feed, FeedToggle } from '../../feed/components';
-import { useGetProfileFeedQuery } from '../../feed/api/repository';
 import { useLocation, useParams } from 'react-router-dom';
+import { Container } from '../../../common/components/container/container.component';
+import { useGetProfileFeedQuery } from '../../feed/api/repository';
+import { FeedToggle } from '../../feed/components/feed-toggle/feed-toggle.component';
+import { Feed } from '../../feed/components/feed/feed.component';
 import { usePageParam } from '../../feed/hooks/use-page-param.hook';
-import { Container } from '../../../common/components';
+import { useGetProfileQuery } from '../api/repository';
+import { ProfileBanner } from '../components/profile-banner/profile-banner.component';
 
 interface ProfilePageProps {}
 
@@ -13,30 +15,45 @@ export const ProfilePage: FC<ProfilePageProps> = () => {
   const { profile } = useParams();
   const { pathname } = useLocation();
 
-  const { data, isLoading, isFetching, error } = useGetProfileFeedQuery({
-    page, 
-    author: profile!,
-    isFavorite: pathname.includes(`/${encodeURIComponent(profile!)}/favorites`)
+  const { data: profileInfo, isLoading: profileLoading } = useGetProfileQuery({
+    username: profile!,
   });
 
-  const feedToggleItem = [{text: 'Favourited articles', link:`/${encodeURIComponent(profile!)}/favorites`}];
+  const { data, isLoading, isFetching, error } = useGetProfileFeedQuery({
+    page,
+    author: profile!,
+    isFavorite: pathname.includes(
+      `/${encodeURIComponent(profile!)}/favorites`
+    ),
+  });
+
+  const feedToggleItems = [
+    {
+      text: 'Favorites articles',
+      link: `/${encodeURIComponent(profile!)}/favorites`,
+    },
+  ];
+
+  if (profileLoading) {
+    return null;
+  }
 
   return (
-    <>
-      <ProfileBanner />
+    <div>
+      <ProfileBanner profile={profileInfo!.profile} />
       <Container>
-        <FeedToggle 
-          defaultText='My Articles' 
+        <FeedToggle
+          defaultText="My Articles"
           defaultLink={`/${encodeURIComponent(profile!)}`}
-          items={feedToggleItem}
+          items={feedToggleItems}
         />
-        <Feed 
-          data={data} 
-          isLoading={isLoading} 
-          isFetching={isFetching} 
+        <Feed
+          data={data}
+          isLoading={isLoading}
+          isFetching={isFetching}
           error={error}
         />
       </Container>
-    </>
-  )
-}
+    </div>
+  );
+};
