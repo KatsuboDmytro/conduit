@@ -1,7 +1,6 @@
 import { FC } from 'react';
-import { ArticleBanner, TagList } from '../components';
+import { ArticleBanner, TagList, ArticleMeta, CommentsList } from '../components';
 import { Container } from '../../../common/components';
-import { ArticleMeta } from '../components/article-meta/article-meta.component';
 import { useGetSingleArticleQuery } from '../api/repository';
 import { useParams } from 'react-router';
 
@@ -43,8 +42,11 @@ export const ArticlePage: FC<ArticlePageProps> = () => {
             authorNameStyle='GREEN' 
             author={data.article.author}
             likes={data.article.favoritesCount} 
-            publishedAt={data.article.createdAt} />
+            publishedAt={data.article.createdAt} 
+          />
         </div>
+
+        <CommentsList />
       </Container>
     </div>
   );

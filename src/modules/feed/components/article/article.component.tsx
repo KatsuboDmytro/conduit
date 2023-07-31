@@ -2,7 +2,6 @@ import { FC } from 'react';
 import { Link } from 'react-router-dom'
 import { ArticleAuthor, FavouriteButton, TagList } from '../index';
 import { FeedArticle } from '../../api/dto/global-feed.in';
-import { DateTime } from 'luxon';
 
 interface ArticleProps extends FeedArticle {}
 
@@ -11,7 +10,7 @@ export const Article: FC<ArticleProps> = ({ author, createdAt, favoritesCount, t
     <article>
       <div className="border-t border-black/10 py-6">
         <div className="mb-4 font-light flex justify-between">
-          <ArticleAuthor author={author} createdAt={createdAt}/>
+          <ArticleAuthor author={author} publishedAt={createdAt}/>
           <FavouriteButton count={favoritesCount} />
         </div>
 

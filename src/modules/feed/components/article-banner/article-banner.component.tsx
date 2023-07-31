@@ -1,8 +1,5 @@
 import { FC } from 'react';
 import { Container } from '../../../../common/components';
-import { ArticleAuthor } from '../article-author/article-author.component';
-import { FollowButton } from '../../../profile/components/follow-button/follow-button.component';
-import { FavouriteButton } from '../favourite-button/favourite-button.component';
 import { ArticleMeta } from '../article-meta/article-meta.component';
 import { Author } from '../../api/dto/global-feed.in';
 
