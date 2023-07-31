@@ -11,11 +11,11 @@ export enum NameStyleEnum {
 
 interface ArticleAuthorProps {
   author: Author;
-  createdAt: string;
+  publishedAt: string;
   nameStyle?: keyof typeof NameStyleEnum;
 }
 
-export const ArticleAuthor: FC<ArticleAuthorProps> = ({ author, createdAt, nameStyle=NameStyleEnum.GREEN }) => {
+export const ArticleAuthor: FC<ArticleAuthorProps> = ({ author, publishedAt, nameStyle=NameStyleEnum.GREEN }) => {
   const usernameClasses = clsx('font-medium', {
     'text-white hover:text-white': nameStyle === NameStyleEnum.LIGHT,
   })
@@ -31,7 +31,7 @@ export const ArticleAuthor: FC<ArticleAuthorProps> = ({ author, createdAt, nameS
           {author.username}
         </Link>
         <span className='text-conduit-gray text-date'>
-          {DateTime.fromISO(createdAt).toLocaleString(DateTime.DATE_FULL)}
+          {DateTime.fromISO(publishedAt).toLocaleString(DateTime.DATE_FULL)}
         </span>
       </div>
     </div>
