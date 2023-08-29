@@ -6,13 +6,13 @@ interface ProfileParams {
   username: string;
 }
 
-interface UpdateProfileParams {
-  avatar: string;
-  username: string;
-  bio: string;
-  email: string;
-  newPassword: string;
-}
+// interface UpdateProfileParams {
+//   avatar: string;
+//   username: string;
+//   bio: string;
+//   email: string;
+//   newPassword: string;
+// }
 
 export const profileApi = createApi({
   reducerPath: 'profileApi',
