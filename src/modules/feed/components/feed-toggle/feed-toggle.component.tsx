@@ -1,6 +1,7 @@
 import clsx from 'clsx';
 import { FC } from 'react';
 import { NavLink, useSearchParams } from 'react-router-dom';
+import { useAuth } from '../../../auth/hooks/useAuthState';
 
 interface FeedToggleItem {
   text: string;
