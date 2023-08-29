@@ -7,7 +7,7 @@ import { useAuth } from '../../../modules/auth/hooks/useAuthState';
 interface HeaderProps {}
 
 export const Header: FC<HeaderProps> = () => {
-  const { isLoggedIn, logOut } = useAuth();
+  const { isLoggedIn, logOut, user } = useAuth();
 
   const navLinkClasses = ({ isActive }: { isActive: boolean }) => 
     clsx('py-navItem hover:text-black/60 hover:no-underline', {
@@ -30,11 +30,31 @@ export const Header: FC<HeaderProps> = () => {
                 </NavLink>
               </li>
               {isLoggedIn ? (
-                <li className="ml-4">
-                  <NavLink to="/" className={navLinkClasses} onClick={logOut}>
-                    Log out
-                  </NavLink>
-                </li>
+                <>
+                  <li className="ml-4">
+                    <NavLink to="/editor" className={navLinkClasses} onClick={logOut}>
+                      <i className='mr-1 ion-compass' />
+                      New article
+                    </NavLink>
+                  </li>
+                  <li className="ml-4">
+                    <NavLink to="/settings" className={navLinkClasses} onClick={logOut}>
+                      <i className='mr-1 ion-gear-a' />
+                      Settings
+                    </NavLink>
+                  </li>
+                  <li className="ml-4">
+                    <NavLink to={`/${user?.username}` }className={navLinkClasses} onClick={logOut}>
+                      <img src={`${user?.image}`} className='w-6 h-6 rounded-full inline mr-2' alt="avatar" />
+                      {user?.username}
+                    </NavLink>
+                  </li>
+                  <li className="ml-4">
+                    <NavLink to="/" className={navLinkClasses} onClick={logOut}>
+                      Log out
+                    </NavLink>
+                  </li>
+                </>
               ) : (
                 <>
                   <li className="ml-4">
