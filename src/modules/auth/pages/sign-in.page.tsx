@@ -6,9 +6,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
 import { Button } from '../../../common/components/button/button.component';
-import { useLazySignInQuery } from '../api/repository';
-import { setUser } from '../service/slice';
-import { useAppDispatch } from '../../../store/store';
+import { useAuth } from '../hooks/useAuthState';
 
 interface SignInPageProps {}
 
@@ -23,6 +21,8 @@ const validationSchema = yup.object({
 });
 
 export const SignInPage: FC<SignInPageProps> = () => {
+  const { signIn } = useAuth();
+  
   const { register, handleSubmit, formState } = useForm<SignInFormValues>({
     defaultValues: {
       email: '',
@@ -31,18 +31,11 @@ export const SignInPage: FC<SignInPageProps> = () => {
     resolver: yupResolver(validationSchema),
   });
 
-  const [triggerSignInQuery] = useLazySignInQuery();
   const navigate = useNavigate();
-  const dispatch = useAppDispatch();
 
   const onSubmit = async (values: SignInFormValues) => {
     try {
-      const { data } = await triggerSignInQuery(values, false);
-      if(!data) {
-        throw new Error('No data in query');
-      }
-
-      dispatch(setUser(data.user));
+      await signIn(values);
       navigate('/');
     } catch(e) {
       toast.error('Something went wrong. Pease try again later');

@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import type { TypedUseSelectorHook } from 'react-redux'
 import { persistReducer } from 'redux-persist';
 import storage from 'redux-persist/lib/storage'
+import { FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER } from 'redux-persist';
 import { feedApi } from '../modules/feed/api/repository';
 import { profileApi } from '../modules/profile/api/repository';
 import { authApi } from '../modules/auth/api/repository';
@@ -28,9 +29,11 @@ export const store = configureStore({
   reducer: persistentReducer,
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
-      serializableCheck: false,
+      serializableCheck: {
+        ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
+      },
     })
-      .concat(feedApi.middleware, profileApi.middleware, authApi.middleware),
+    .concat(feedApi.middleware, profileApi.middleware, authApi.middleware),
 });
 
 export const persistedStore = persistStore(store);
