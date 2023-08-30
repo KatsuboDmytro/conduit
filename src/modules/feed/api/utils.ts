@@ -2,6 +2,7 @@ import { Drafted } from "immer/dist/internal";
 import { RootState } from "../../../store/store";
 import { FeedArticle, GlobalFeedInDTO } from "./dto/global-feed.in"
 import { FeedData } from "./repository";
+import { SingleArticleInDTO } from "./dto/single-article.in";
 
 export const transformResponse = (response: GlobalFeedInDTO) => {
   return {
@@ -10,7 +11,14 @@ export const transformResponse = (response: GlobalFeedInDTO) => {
   }
 }
 
-const updateFeed = <Q>(feedKey: string, data: {article: FeedArticle}, feedKeys: string[], state: RootState, dispatch: any, feedApi: any) => {
+const updateFeed = <Q>(
+  feedKey: string, 
+  data: {article: FeedArticle}, 
+  feedKeys: string[], 
+  state: RootState, 
+  dispatch: any, 
+  feedApi: any,
+  ) => {
   for(let i = 0, key = feedKeys[i], queryItem = state.feedApi.queries[key]; i < feedKeys.length; i++, key = feedKeys[i], state.feedApi.queries[key]) {
     if(!key.startsWith(feedKey)) {
       continue;
@@ -20,17 +28,22 @@ const updateFeed = <Q>(feedKey: string, data: {article: FeedArticle}, feedKeys: 
       feedApi.util.updateQueryData(
         feedKey, 
         queryItem!.originalArgs as Q, 
-        (draft: Drafted<FeedData>) => {
-          const updateId = draft.articles.findIndex(
-            (article: any) => article.slug === data.article.slug
-          );
-        
-          if(updateId >= 0) {
-            draft.articles[updateId] = data.article;
+        (draft: Drafted<FeedData | SingleArticleInDTO>) => {
+          if('articles' in draft) {
+            const updateId = draft.articles.findIndex(
+              (article: any) => article.slug === data.article.slug
+            );
+          
+            if(updateId >= 0) {
+              draft.articles[updateId] = data.article;
+            }
+          } else {
+            draft.article.favorited = data.article.favorited;
+            draft.article.favoritesCount = data.article.favoritesCount;
           }
         }
       )
-    )
+    );
   }
 }
 
@@ -43,5 +56,6 @@ export const replaceCachedArticle = async (getState: any, queryFulfilled: any, d
     
     updateFeed('getGlobalFeed', data, feedKeys, state, dispatch, feedApi);
     updateFeed('getProfileFeed', data, feedKeys, state, dispatch, feedApi);
+    updateFeed('getSingleArticle', data, feedKeys, state, dispatch, feedApi);
   } catch (e) {}
 }
