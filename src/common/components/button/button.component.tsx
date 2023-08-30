@@ -24,7 +24,6 @@ interface ButtonProps {
   variant?: keyof typeof ButtonVariantEnum;
   type?: ComponentProps<'button'>['type'];
   disabled?: ComponentProps<'button'>['disabled'];
-  onClick: any;
 }
 
 export const Button: FC<PropsWithChildren<ButtonProps>> = ({
@@ -32,7 +31,6 @@ export const Button: FC<PropsWithChildren<ButtonProps>> = ({
   btnSize = ButtonSizeEnum.BASE,
   variant = ButtonVariantEnum.BASE,
   children,
-  onClick,
   ...buttonProps
 }) => {
   const btnClasses = clsx(
@@ -58,7 +56,7 @@ export const Button: FC<PropsWithChildren<ButtonProps>> = ({
   );
 
   return (
-    <button className={btnClasses} onClick={onClick} {...buttonProps}>
+    <button className={btnClasses} {...buttonProps}>
       {children}
     </button>
   )

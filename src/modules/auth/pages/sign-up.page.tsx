@@ -69,7 +69,6 @@ export const SignUpPage: FC<SignUpPageProps> = () => {
             btnStyle={'GREEN'} 
             btnSize={'LG'} 
             type={'submit'} 
-            onClick={''}
             disabled={formState.isSubmitting}
           >
             Sign up

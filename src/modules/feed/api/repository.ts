@@ -7,7 +7,6 @@ import { realWorldBaseQuery } from '../../../core/api/real-world-query';
 import { SingleArticleInDTO } from './dto/single-article.in';
 import { ArticleCommentsInDTO } from './dto/article-comments.in';
 import { FavoriteArticleInDTO } from './dto/favorite-article.in';
-import { RootState } from '../../../store/store';
 
 interface BaseFeedParams {
   page: number;
@@ -66,6 +65,7 @@ export const feedApi = createApi({
   tagTypes: ['Article'],
   endpoints: (builder) => ({
     getGlobalFeed: builder.query<FeedData, GlobalFeedParams>({
+      keepUnusedDataFor: 1,
       query: ({ page, tag, isPersonalFeed }) => ({
         url: isPersonalFeed ? '/articles/feed' : '/articles', 
         method: 'get',
@@ -84,6 +84,7 @@ export const feedApi = createApi({
     }),
 
     getProfileFeed: builder.query<FeedData, ProfileFeedParams>({
+      keepUnusedDataFor: 1,
       query: ({ page, author, isFavorite=false }) => ({
         url: '/articles',
         method: 'get',
@@ -95,9 +96,11 @@ export const feedApi = createApi({
         },
       }),
       transformResponse,
+      providesTags: ['Article'],
     }),
 
     getPopularTags: builder.query<PopularTagsInDTO, any>({
+      keepUnusedDataFor: 1,
       query: () => ({
         url: '/tags',
         method: 'get',
@@ -105,6 +108,7 @@ export const feedApi = createApi({
     }),
 
     getSingleArticle: builder.query<SingleArticleInDTO, SingleArticleParams>({
+      keepUnusedDataFor: 1,
       query: ({slug}) => ({
         url: `/articles/${slug}`,
         method: 'get',
@@ -112,6 +116,7 @@ export const feedApi = createApi({
     }),
 
     getCommentsArticle: builder.query<ArticleCommentsInDTO, SingleArticleParams>({
+      keepUnusedDataFor: 1,
       query: ({slug}) => ({
         url: `/articles/${slug}/comments`,
         method: 'get',
@@ -123,6 +128,7 @@ export const feedApi = createApi({
         url: `/articles/${slug}/favorite`,
         method: 'post',
       }),
+      invalidatesTags: ['Article'],
       onQueryStarted: async ({}, { dispatch, queryFulfilled, getState }) => {
         await replaceCachedArticle(getState, queryFulfilled, dispatch, feedApi);
       }
@@ -139,7 +145,6 @@ export const feedApi = createApi({
     }),
   }),
 })
-
 
 export const { 
   useGetGlobalFeedQuery, 

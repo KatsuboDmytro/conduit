@@ -43,11 +43,11 @@ export const routes: Record<string, RouteItem> = {
     path: '/sign-up',
     Element: SignUpPage,
   },
-  // settings: {
-  //   path: '/settings',
-  //   Element: SettingsPage,
-  //   private: true,
-  // },
+  settings: {
+    path: '/settings',
+    Element: SignUpPage,//SettingsPage,
+    private: true,
+  },
   // createArticle: {
   //   path: '/editor',
   //   Element: EditorPage,

@@ -32,19 +32,19 @@ export const Header: FC<HeaderProps> = () => {
               {isLoggedIn ? (
                 <>
                   <li className="ml-4">
-                    <NavLink to="/editor" className={navLinkClasses} onClick={logOut}>
+                    <NavLink to="/editor" className={navLinkClasses}>
                       <i className='mr-1 ion-compass' />
                       New article
                     </NavLink>
                   </li>
                   <li className="ml-4">
-                    <NavLink to="/settings" className={navLinkClasses} onClick={logOut}>
+                    <NavLink to="/settings" className={navLinkClasses}>
                       <i className='mr-1 ion-gear-a' />
                       Settings
                     </NavLink>
                   </li>
                   <li className="ml-4">
-                    <NavLink to={`/${user?.username}` }className={navLinkClasses} onClick={logOut}>
+                    <NavLink to={`/${user?.username}` } className={navLinkClasses}>
                       <img src={`${user?.image}`} className='w-6 h-6 rounded-full inline mr-2' alt="avatar" />
                       {user?.username}
                     </NavLink>

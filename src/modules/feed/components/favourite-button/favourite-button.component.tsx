@@ -35,17 +35,16 @@ export const FavouriteButton: FC<FavouriteButtonProps> = ({ count, extended, slu
     <Button
       btnStyle="GREEN"
       variant={isFavorited ? 'BASE' : 'OUTLINED'}
-      onClick={handleFavoriteClick}
-      disabled={
-        favoriteMutationState.isLoading || unFavoriteMutationState.isLoading
-      }
+      disabled={favoriteMutationState.isLoading || unFavoriteMutationState.isLoading}
     >
-      <i className="ion-heart"></i>
-      <span className="ml-1 font-normal">
-        {extended && 'Favorite Article ('}
-        {count}
-        {extended && ')'}
-      </span>
+      <div onClick={handleFavoriteClick}>
+        <i className="ion-heart"></i>
+        <span className="ml-1 font-normal">
+          {extended && 'Favorite Article ('}
+          {count}
+          {extended && ')'}
+        </span>
+      </div>
     </Button>
   )
 }
