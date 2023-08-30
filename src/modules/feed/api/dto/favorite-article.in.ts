@@ -1,9 +1,8 @@
-export interface GlobalFeedInDTO {
-  articles: FeedArticle[];
-  articlesCount: number;
+export interface FavoriteArticleInDTO {
+  article: Article;
 }
 
-export interface FeedArticle {
+interface Article {
   slug: string;
   title: string;
   description: string;
@@ -17,9 +16,9 @@ export interface FeedArticle {
   id: string;
 }
 
-export interface Author {
+interface Author {
   username: string;
-  bio?: any;
+  bio: string;
   image: string;
   following: boolean;
 }

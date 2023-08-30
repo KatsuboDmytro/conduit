@@ -9,6 +9,8 @@ interface ArticleMetaProps {
   authorDirection?: ComponentProps<typeof ArticleAuthor>['direction'];
   authorNameSize?: ComponentProps<typeof ArticleAuthor>['nameSize'];
   author: Author;
+  isFavorited: boolean;
+  slug: string;
   likes?: number;
   publishedAt: string;
   showActionButton?: boolean;
@@ -17,11 +19,13 @@ interface ArticleMetaProps {
 export const ArticleMeta: FC<ArticleMetaProps> = ({
   authorNameStyle = NameStyleEnum.GREEN, 
   author,
+  slug,
   likes,
   publishedAt,
   showActionButton = true,
   authorDirection,
   authorNameSize,
+  isFavorited,
 }) => {
 
   return (
@@ -38,7 +42,12 @@ export const ArticleMeta: FC<ArticleMetaProps> = ({
       {showActionButton && (
         <div className="inline-flex gap-4">
           <FollowButton username={author.username} btnStyle='LIGHT' />
-          <FavouriteButton count={likes || 0} extended />
+          <FavouriteButton 
+            slug={slug}
+            isFavorited={isFavorited}
+            count={likes || 0} 
+            extended 
+          />
         </div>
       )}
     </div>

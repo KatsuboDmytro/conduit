@@ -2,15 +2,17 @@ import { createApi } from '@reduxjs/toolkit/query/react'
 import { FeedArticle } from './dto/global-feed.in';
 import { FEED_PAGE_SIZE } from '../consts';
 import { PopularTagsInDTO } from './dto/popular-tags.in';
-import { transformResponse } from './utils';
+import { replaceCachedArticle, transformResponse } from './utils';
 import { realWorldBaseQuery } from '../../../core/api/real-world-query';
 import { SingleArticleInDTO } from './dto/single-article.in';
 import { ArticleCommentsInDTO } from './dto/article-comments.in';
+import { FavoriteArticleInDTO } from './dto/favorite-article.in';
+import { RootState } from '../../../store/store';
 
 interface BaseFeedParams {
   page: number;
 }
-interface GlobalFeedParams extends BaseFeedParams {
+export interface GlobalFeedParams extends BaseFeedParams {
   tag: string | null;
   isPersonalFeed: boolean;
 }
@@ -29,9 +31,39 @@ interface SingleArticleParams {
   slug: string;
 }
 
+interface FavoriteArticleParams {
+  slug: string;
+}
+
+interface CreateArticleParams {
+  title: string;
+  description: string;
+  body: string;
+  tags: string;
+}
+
+interface DeleteArticleParams {
+  slug: string;
+}
+
+interface EditArticleParams extends CreateArticleParams {
+  slug: string;
+}
+
+interface CreateCommentParams {
+  articleSlug: string;
+  comment: string;
+}
+
+interface DeleteCommentParams {
+  id: number;
+  articleSlug: string;
+}
+
 export const feedApi = createApi({
   reducerPath: 'feedApi',
   baseQuery: realWorldBaseQuery,
+  tagTypes: ['Article'],
   endpoints: (builder) => ({
     getGlobalFeed: builder.query<FeedData, GlobalFeedParams>({
       query: ({ page, tag, isPersonalFeed }) => ({
@@ -44,6 +76,11 @@ export const feedApi = createApi({
         }
       }),
       transformResponse,
+      providesTags: result => 
+        result ? result?.articles.map(article => ({
+          type: 'Article', 
+          slug: article.slug, 
+      })) : ['Article'],
     }),
 
     getProfileFeed: builder.query<FeedData, ProfileFeedParams>({
@@ -79,7 +116,27 @@ export const feedApi = createApi({
         url: `/articles/${slug}/comments`,
         method: 'get',
       })
-    })
+    }),
+
+    favoriteArticle: builder.mutation<FavoriteArticleInDTO, FavoriteArticleParams>({
+      query: ({slug}) => ({
+        url: `/articles/${slug}/favorite`,
+        method: 'post',
+      }),
+      onQueryStarted: async ({}, { dispatch, queryFulfilled, getState }) => {
+        await replaceCachedArticle(getState, queryFulfilled, dispatch, feedApi);
+      }
+    }),
+    
+    unFavoriteArticle: builder.mutation<FavoriteArticleInDTO, FavoriteArticleParams>({
+      query: ({slug}) => ({
+        url: `/articles/${slug}/favorite`,
+        method: 'delete',
+      }),
+      onQueryStarted: async ({}, { dispatch, queryFulfilled, getState }) => {
+        await replaceCachedArticle(getState, queryFulfilled, dispatch, feedApi);
+      }
+    }),
   }),
 })
 
@@ -90,4 +147,6 @@ export const {
   useGetProfileFeedQuery,
   useGetSingleArticleQuery,
   useGetCommentsArticleQuery,
+  useFavoriteArticleMutation,
+  useUnFavoriteArticleMutation,
 } = feedApi;

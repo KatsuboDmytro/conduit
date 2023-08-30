@@ -62,6 +62,7 @@ export const SignInPage: FC<SignInPageProps> = () => {
             btnStyle={'GREEN'} 
             btnSize={'LG'} 
             type={'submit'} 
+            onClick={''}
             disabled={formState.isSubmitting}
           >
             Sign in

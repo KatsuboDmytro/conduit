@@ -5,13 +5,17 @@ import { FeedArticle } from '../../api/dto/global-feed.in';
 
 interface ArticleProps extends FeedArticle {}
 
-export const Article: FC<ArticleProps> = ({ author, createdAt, favoritesCount, title, description, tagList, slug }) => {
+export const Article: FC<ArticleProps> = ({ favorited, author, createdAt, favoritesCount, title, description, tagList, slug }) => {
   return (
     <article>
       <div className="border-t border-black/10 py-6">
         <div className="mb-4 font-light flex justify-between">
           <ArticleAuthor author={author} publishedAt={createdAt}/>
-          <FavouriteButton count={favoritesCount} />
+          <FavouriteButton 
+            count={favoritesCount} 
+            slug={slug} 
+            isFavorited={favorited}
+          />
         </div>
 
         <Link to={`/article/${encodeURIComponent(slug)}`} className='hover:no-underline'>

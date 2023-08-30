@@ -8,6 +8,8 @@ interface ArticleBannerProps {
   author: Author;
   likes: number;
   publishedAt: string;
+  slug: string;
+  isFavorited: boolean;
 }
 
 export const ArticleBanner: FC<ArticleBannerProps> = ({
@@ -15,6 +17,8 @@ export const ArticleBanner: FC<ArticleBannerProps> = ({
   author, 
   likes,
   publishedAt,
+  slug,
+  isFavorited,
 }) => {
 
   return (
@@ -24,9 +28,12 @@ export const ArticleBanner: FC<ArticleBannerProps> = ({
           {title}
         </h1>
         <ArticleMeta 
-        author={author} 
-        likes={likes} 
-        publishedAt={publishedAt} />
+          author={author} 
+          likes={likes} 
+          publishedAt={publishedAt}
+          slug={slug}
+          isFavorited={isFavorited}
+        />
       </Container>
     </div>
   );

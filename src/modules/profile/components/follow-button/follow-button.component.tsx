@@ -8,7 +8,7 @@ interface FollowButtonProps {
 
 export const FollowButton: FC<FollowButtonProps> = ({username, btnStyle = ButtonStyleEnum.DARK}) => {
   return (
-    <Button btnStyle={btnStyle}>
+    <Button btnStyle={btnStyle} onClick={''}>
       <i className="ion-plus-round" />
       &nbsp; Follow {username}
     </Button>

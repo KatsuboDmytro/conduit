@@ -28,7 +28,10 @@ export const ArticlePage: FC<ArticlePageProps> = () => {
         title={data.article.title}
         author={data.article.author}
         likes={data.article.favoritesCount} 
-        publishedAt={data.article.createdAt} />
+        publishedAt={data.article.createdAt}
+        slug={slug!} 
+        isFavorited={data.article.favorited} 
+      />
 
       <Container>
         <div className="pb-8 border-b mb-6">
@@ -41,8 +44,10 @@ export const ArticlePage: FC<ArticlePageProps> = () => {
           <ArticleMeta 
             authorNameStyle='GREEN' 
             author={data.article.author}
+            slug={slug!}
             likes={data.article.favoritesCount} 
-            publishedAt={data.article.createdAt} 
+            publishedAt={data.article.createdAt}
+            isFavorited={data.article.favorited}
           />
         </div>
 

@@ -32,7 +32,9 @@ export const CommentsList: FC<CommentsListProps> = () => {
         key={comment.id} 
         body={comment.body}
         author={comment.author}
-        publishedAt={comment.createdAt} />
+        publishedAt={comment.createdAt}
+        slug={slug!}
+        isFavorited={false} />
       ))}
     </div>
   );

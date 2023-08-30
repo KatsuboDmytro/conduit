@@ -6,12 +6,16 @@ interface CommentsItemProps {
   body: string;
   author: Author;
   publishedAt: string;
+  slug: string;
+  isFavorited: boolean;
 }
 
 export const CommentsItem: FC<CommentsItemProps> = ({
   body,
   author,
   publishedAt,
+  slug,
+  isFavorited,
 }) => {
   return (
     <div className='max-w-3xl mx-auto mt-16 flex flex-col gap-3'>
@@ -25,7 +29,9 @@ export const CommentsItem: FC<CommentsItemProps> = ({
           showActionButton={false}
           publishedAt={publishedAt}
           authorDirection='ROW'
-          authorNameSize='SM' />
+          authorNameSize='SM'
+          slug={slug} 
+          isFavorited={isFavorited} />
       </div>
     </div>
   );
