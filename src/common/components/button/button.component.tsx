@@ -38,14 +38,14 @@ export const Button: FC<PropsWithChildren<ButtonProps>> = ({
     {
       'border-conduit-gray-700 text-conduit-gray-700 hover:bg-conduit-gray-400 focus:bg-conduit-gray-400':
         btnStyle === ButtonStyleEnum.DARK,
-      'border-conduit-gray-400 text-conduit-gray-400 hover:bg-conduit-gray-400 hover:text-white':
+      'border-conduit-gray-400 text-white hover:bg-conduit-gray-400 hover:text-white':
         btnStyle === ButtonStyleEnum.LIGHT,
       'border-conduit-green active:bg-conduit-darkGreen':
         btnStyle === ButtonStyleEnum.GREEN,
       'bg-conduit-green text-white hover:bg-conduit-darkGreen hover:border-conduit-darkGreen hover:text-white':
         btnStyle === ButtonStyleEnum.GREEN &&
         variant === ButtonVariantEnum.BASE,
-      'bg-white text-conduit-green hover:bg-conduit-green hover:text-white disabled:bg-conduit-darkGreen disabled:text-white':
+      'text-conduit-green hover:bg-conduit-green hover:text-white disabled:bg-conduit-darkGreen disabled:text-white':
         btnStyle === ButtonStyleEnum.GREEN &&
         variant === ButtonVariantEnum.OUTLINED,
       'border-conduit-red text-conduit-red hover:bg-conduit-red focus:bg-conduit-red hover:text-white disabled:bg-conduit-red disabled:text-white disabled:cursor-not-allowed':

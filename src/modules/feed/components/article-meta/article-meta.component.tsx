@@ -41,7 +41,11 @@ export const ArticleMeta: FC<ArticleMetaProps> = ({
       </div>
       {showActionButton && (
         <div className="inline-flex gap-4">
-          <FollowButton username={author.username} btnStyle='LIGHT' />
+          <FollowButton 
+            username={author.username} 
+            btnStyle='LIGHT' 
+            isFollowed={author.following} 
+          />
           <FavouriteButton 
             slug={slug}
             isFavorited={isFavorited}
