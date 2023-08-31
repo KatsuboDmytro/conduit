@@ -1,46 +1,9 @@
-# Getting Started with Create React App
-
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
-
-## Available Scripts
-
-In the project directory, you can run:
-
-### `npm start`
-
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
-
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
-
-### `npm test`
-
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+# Conduit: Blogs
+I created a blog website by watching the HeadOf tutorial on YouTube.
+![image](https://github.com/KatsuboDmytro/conduit/assets/103748028/28aa0abf-edeb-46d5-8e21-0fda61e26131)
+After registration, you can like, follow, create new articles, or change your profile settings.
+![image](https://github.com/KatsuboDmytro/conduit/assets/103748028/9b4f6b72-928b-4515-83a1-e02df75d9109)
+![image](https://github.com/KatsuboDmytro/conduit/assets/103748028/a2088f53-9c7b-40fb-9921-14a31cd4ebc7)
+![image](https://github.com/KatsuboDmytro/conduit/assets/103748028/39196261-5001-4434-9e97-ecacf581df5b)
+![image](https://github.com/KatsuboDmytro/conduit/assets/103748028/951ff12a-8949-4140-bb63-1eb454c7a084)
+![image](https://github.com/KatsuboDmytro/conduit/assets/103748028/1eb977a7-6f81-4e5a-b318-3c1538f037dc)
