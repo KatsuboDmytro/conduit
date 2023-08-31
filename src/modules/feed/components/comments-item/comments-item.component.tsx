@@ -1,5 +1,4 @@
 import { FC } from 'react';
-import { ArticleMeta } from '../index';
 import { Author } from '../../api/dto/global-feed.in';
 import { CommentMeta } from '../comment-meta/comment-meta.component';
 

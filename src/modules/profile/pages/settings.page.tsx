@@ -1,9 +1,7 @@
-import { yupResolver } from '@hookform/resolvers/yup';
 import { FC } from 'react';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
-import * as yup from 'yup';
 import { Button } from '../../../common/components/button/button.component';
 import { Container } from '../../../common/components/container/container.component';
 import { Input } from '../../../common/components/input/input.component';
@@ -22,15 +20,7 @@ interface SettingsFormValues {
   newPassword: string;
 }
 
-const validationSchema = yup.object({
-  avatar: yup.string().url().required(),
-  username: yup.string().min(3).required(),
-  bio: yup.string(),
-  email: yup.string().email().required(),
-  newPassword: yup.string(),
-});
-
-export const SettingsPage: FC<SettingsPageProps> = ({}) => {
+export const SettingsPage: FC<SettingsPageProps> = () => {
   const auth = useAuth();
   const [triggerUpdateUser] = useUpdateUserMutation();
   const navigate = useNavigate();
@@ -43,14 +33,13 @@ export const SettingsPage: FC<SettingsPageProps> = ({}) => {
       email: auth.user?.email,
       newPassword: '',
     },
-    //resolver: yupResolver(validationSchema),
   });
 
   const onSubmit = async (values: SettingsFormValues) => {
     try {
       await triggerUpdateUser({
         ...values,
-        bio: values.bio || '', // Provide a default empty string if tags is undefined
+        bio: values.bio || '',
       }).unwrap();
       navigate(`/${encodeURIComponent(values.username)}`);
     } catch (e) {

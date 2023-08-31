@@ -6,12 +6,10 @@ import { GlobalFeedPage } from '../modules/feed/pages/global-feed.page';
 import { ProfilePage } from '../modules/profile/pages/profile.page';
 import { EditorPage } from '../modules/feed/pages/editor.page';
 import { SettingsPage } from '../modules/profile/pages/settings.page';
-// import { SettingsPage } from '../modules/profile/pages/settings.page';
 
 interface RouteItem {
   path: string;
   Element: FC;
-  private?: boolean;
 }
 
 export const routes: Record<string, RouteItem> = {
@@ -22,7 +20,6 @@ export const routes: Record<string, RouteItem> = {
   personalFeed: {
     path: '/personal-feed',
     Element: GlobalFeedPage,
-    private: true,
   },
   profile: {
     path: '/:profile',
@@ -47,16 +44,13 @@ export const routes: Record<string, RouteItem> = {
   settings: {
     path: '/settings',
     Element: SettingsPage,
-    private: true,
   },
   createArticle: {
     path: '/editor',
     Element: EditorPage,
-    private: true,
   },
   editArticle: {
     path: '/editor/:slug',
     Element: EditorPage,
-    private: true,
   },
 };
