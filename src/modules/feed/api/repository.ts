@@ -192,26 +192,13 @@ export const feedApi = createApi({
       }
     }),
     
-    deleteArticle: builder.mutation<EditArticleInDTO, EditArticleParams>({
-      query: ({title, description, body, tags, slug}) => {
-        const data: EditArticleOutDTO = {
-          article: {
-            title, 
-            description, 
-            body, 
-            tagList: 
-            tags.split(',').map((tag) => tag.trim()),
-          },
-        };
+    deleteArticle: builder.mutation<any, DeleteArticleParams>({
+      query: ({slug}) => {
         return {
           url: `/articles/${slug}`,
-          method: 'post',
-          data,
-        }
+          method: 'delete',
+        };
       },
-      onQueryStarted: async ({}, { dispatch, queryFulfilled, getState }) => {
-        await replaceCachedArticle(getState, queryFulfilled, dispatch, feedApi);
-      }
     }),
   }),
 })
