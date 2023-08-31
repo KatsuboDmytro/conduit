@@ -13,6 +13,7 @@
     "@types/node": "^16.18.38",
     "@types/react": "^18.2.14",
     "@types/react-dom": "^18.2.6",
+    "@uiw/react-md-editor": "^3.23.5",
     "axios": "^1.4.0",
     "clsx": "^1.2.1",
     "luxon": "^3.3.0",

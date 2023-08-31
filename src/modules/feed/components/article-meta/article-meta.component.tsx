@@ -3,6 +3,11 @@ import { ArticleAuthor, NameStyleEnum } from '../article-author/article-author.c
 import { FollowButton } from '../../../profile/components/follow-button/follow-button.component';
 import { FavouriteButton } from '../favourite-button/favourite-button.component';
 import { Author } from '../../api/dto/global-feed.in';
+import { useAuth } from '../../../auth/hooks/useAuthState';
+import { Button } from '../../../../common/components/button/button.component';
+import { toast } from 'react-toastify';
+import { useNavigate } from 'react-router';
+import { useDeleteArticleMutation } from '../../api/repository';
 
 interface ArticleMetaProps {
   authorNameStyle?: ComponentProps<typeof ArticleAuthor>['nameStyle'];
@@ -27,6 +32,22 @@ export const ArticleMeta: FC<ArticleMetaProps> = ({
   authorNameSize,
   isFavorited,
 }) => {
+  const auth = useAuth();
+  const [triggerDeleteArticle, { isLoading }] = useDeleteArticleMutation();
+
+  const navigate = useNavigate();
+  const navigateToEdit = () => {
+    navigate(`/editor/${slug}`);
+  };
+
+  const deleteArticle = async () => {
+    try {
+      //await triggerDeleteArticle({ slug }).unwrap();
+      navigate('/');
+    } catch (e) {
+      toast.error("Something wen't wrong. Please, try again later");
+    }
+  };
 
   return (
     <div>
@@ -41,17 +62,35 @@ export const ArticleMeta: FC<ArticleMetaProps> = ({
       </div>
       {showActionButton && (
         <div className="inline-flex gap-4">
-          <FollowButton 
-            username={author.username} 
-            btnStyle='LIGHT' 
-            isFollowed={author.following} 
-          />
-          <FavouriteButton 
-            slug={slug}
-            isFavorited={isFavorited}
-            count={likes || 0} 
-            extended 
-          />
+          {auth.user?.username === author.username ? (
+            <>
+              <Button btnStyle="LIGHT">
+                <div onClick={navigateToEdit}>
+                  <i className="ion-edit" /> Edit Article
+                </div>
+              </Button>
+              <Button btnStyle="DANGER" disabled={isLoading}>
+                <div onClick={deleteArticle}>
+                  <i className="ion-trash-a" /> Delete Article
+                </div>
+              </Button>
+            </>
+          ) : (
+            <>
+              <FollowButton 
+                username={author.username} 
+                btnStyle='LIGHT' 
+                isFollowed={author.following} 
+              />
+              <FavouriteButton 
+                slug={slug}
+                isFavorited={isFavorited}
+                count={likes || 0} 
+                extended 
+              />
+            </>
+          )}
+          
         </div>
       )}
     </div>

@@ -7,6 +7,10 @@ import { realWorldBaseQuery } from '../../../core/api/real-world-query';
 import { SingleArticleInDTO } from './dto/single-article.in';
 import { ArticleCommentsInDTO } from './dto/article-comments.in';
 import { FavoriteArticleInDTO } from './dto/favorite-article.in';
+import { CreateArticleInDTO } from './dto/create-article.in';
+import { CreateArticleOutDTO } from './dto/create-article.out';
+import { EditArticleInDTO } from './dto/edit-article.in';
+import { EditArticleOutDTO } from './dto/edit-article.out';
 
 interface BaseFeedParams {
   page: number;
@@ -143,6 +147,72 @@ export const feedApi = createApi({
         await replaceCachedArticle(getState, queryFulfilled, dispatch, feedApi);
       }
     }),
+    
+    createArticle: builder.mutation<CreateArticleInDTO, CreateArticleParams>({
+      query: ({title, description, body, tags}) => {
+        const data: CreateArticleOutDTO = {
+          article: {
+            title, 
+            description, 
+            body, 
+            tagList: 
+            tags.split(',').map((tag) => tag.trim()),
+          },
+        };
+        return {
+          url: '/articles',
+          method: 'post',
+          data,
+        }
+      },
+      onQueryStarted: async ({}, { dispatch, queryFulfilled, getState }) => {
+        await replaceCachedArticle(getState, queryFulfilled, dispatch, feedApi);
+      }
+    }),
+
+    editArticle: builder.mutation<EditArticleInDTO, EditArticleParams>({
+      query: ({title, description, body, tags, slug}) => {
+        const data: EditArticleOutDTO = {
+          article: {
+            title, 
+            description, 
+            body, 
+            tagList: 
+            tags.split(',').map((tag) => tag.trim()),
+          },
+        };
+        return {
+          url: `/articles/${slug}`,
+          method: 'put',
+          data,
+        }
+      },
+      onQueryStarted: async ({}, { dispatch, queryFulfilled, getState }) => {
+        await replaceCachedArticle(getState, queryFulfilled, dispatch, feedApi);
+      }
+    }),
+    
+    deleteArticle: builder.mutation<EditArticleInDTO, EditArticleParams>({
+      query: ({title, description, body, tags, slug}) => {
+        const data: EditArticleOutDTO = {
+          article: {
+            title, 
+            description, 
+            body, 
+            tagList: 
+            tags.split(',').map((tag) => tag.trim()),
+          },
+        };
+        return {
+          url: `/articles/${slug}`,
+          method: 'post',
+          data,
+        }
+      },
+      onQueryStarted: async ({}, { dispatch, queryFulfilled, getState }) => {
+        await replaceCachedArticle(getState, queryFulfilled, dispatch, feedApi);
+      }
+    }),
   }),
 })
 
@@ -154,4 +224,7 @@ export const {
   useGetCommentsArticleQuery,
   useFavoriteArticleMutation,
   useUnFavoriteArticleMutation,
+  useCreateArticleMutation,
+  useEditArticleMutation,
+  useDeleteArticleMutation,
 } = feedApi;

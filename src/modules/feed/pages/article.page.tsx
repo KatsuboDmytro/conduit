@@ -3,6 +3,7 @@ import { ArticleBanner, TagList, ArticleMeta, CommentsList } from '../components
 import { Container } from '../../../common/components';
 import { useGetSingleArticleQuery } from '../api/repository';
 import { useParams } from 'react-router';
+import MDEditor from '@uiw/react-md-editor';
 
 interface ArticlePageProps {}
 
@@ -35,9 +36,10 @@ export const ArticlePage: FC<ArticlePageProps> = () => {
 
       <Container>
         <div className="pb-8 border-b mb-6">
-          <p className='text-articleBody leading-articleBody font-sourceSerif mb-4'
-            dangerouslySetInnerHTML={{__html: convertNewLines(data.article.body)}}>
-          </p>
+          <MDEditor.Markdown
+            source={convertNewLines(data.article.body)}
+            className="text-articleBody leading-articleBody font-sourceSerif mb-8"
+          />
           <TagList list={data.article.tagList} />
         </div>
         <div className='flex justify-center'>

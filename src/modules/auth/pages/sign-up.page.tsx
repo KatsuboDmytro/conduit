@@ -7,6 +7,7 @@ import { useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
 import { Button } from '../../../common/components/button/button.component';
 import { useAuth } from '../hooks/useAuthState';
+import { ErrorsList } from '../../../common/components/errors-list.component';
 
 interface SignUpPageProps {}
 
@@ -56,11 +57,7 @@ export const SignUpPage: FC<SignUpPageProps> = () => {
         onSubmit={handleSubmit(onSubmit)} 
         noValidate
       >
-        <ul className='list-disc pl-10'>
-          {(Object.keys(formState.errors) as (keyof typeof formState.errors)[]).map(field => (
-            <li key={`error-${field}`} className='text-conduit-red font-bold'>{formState.errors[field]!.message}</li>
-          ))}
-        </ul>
+        <ErrorsList errors={formState.errors} />
         <Input placeholder='Username' {...register('username')} />
         <Input placeholder='Email' type='email' {...register('email')} />
         <Input placeholder='Password' type='password' {...register('password')} />
