@@ -2,7 +2,7 @@ import { createApi } from '@reduxjs/toolkit/query/react'
 import { FeedArticle } from './dto/global-feed.in';
 import { FEED_PAGE_SIZE } from '../consts';
 import { PopularTagsInDTO } from './dto/popular-tags.in';
-import { replaceCachedArticle, transformResponse } from './utils';
+import { addNewCommentToCache, replaceCachedArticle, transformResponse } from './utils';
 import { realWorldBaseQuery } from '../../../core/api/real-world-query';
 import { SingleArticleInDTO } from './dto/single-article.in';
 import { ArticleCommentsInDTO } from './dto/article-comments.in';
@@ -11,6 +11,8 @@ import { CreateArticleInDTO } from './dto/create-article.in';
 import { CreateArticleOutDTO } from './dto/create-article.out';
 import { EditArticleInDTO } from './dto/edit-article.in';
 import { EditArticleOutDTO } from './dto/edit-article.out';
+import { NewCommentInDTO } from './dto/new-comment.in';
+import { NewCommentOutDTO } from './dto/new-comment.out';
 
 interface BaseFeedParams {
   page: number;
@@ -200,6 +202,36 @@ export const feedApi = createApi({
         };
       },
     }),
+    
+    createComment: builder.mutation<NewCommentInDTO, CreateCommentParams>({
+      query: ({articleSlug, comment}) => {
+        const data: NewCommentOutDTO = {
+          comment: {
+            body: comment,
+          },
+        };
+        return {
+          url: `/articles/${articleSlug}/comments`,
+          method: 'post',
+          data,
+        }
+      },
+      onQueryStarted: async ({}, { dispatch, queryFulfilled, getState }) => {
+        await addNewCommentToCache(getState, queryFulfilled, dispatch);
+      },
+    }),
+    
+    deleteComment: builder.mutation<any, DeleteCommentParams>({
+      query: ({id, articleSlug}) => {
+        return {
+          url: `/articles/${articleSlug}/comments/${id}`,
+          method: 'delete',
+        }
+      },
+      onQueryStarted: async ({ id }, { dispatch, queryFulfilled, getState }) => {
+        await addNewCommentToCache(getState, queryFulfilled, dispatch);
+      },
+    }),
   }),
 })
 
@@ -214,4 +246,6 @@ export const {
   useCreateArticleMutation,
   useEditArticleMutation,
   useDeleteArticleMutation,
+  useCreateCommentMutation,
+  useDeleteCommentMutation
 } = feedApi;
