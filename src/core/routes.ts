@@ -5,6 +5,7 @@ import { ArticlePage } from '../modules/feed/pages/article.page';
 import { GlobalFeedPage } from '../modules/feed/pages/global-feed.page';
 import { ProfilePage } from '../modules/profile/pages/profile.page';
 import { EditorPage } from '../modules/feed/pages/editor.page';
+import { SettingsPage } from '../modules/profile/pages/settings.page';
 // import { SettingsPage } from '../modules/profile/pages/settings.page';
 
 interface RouteItem {
@@ -45,7 +46,7 @@ export const routes: Record<string, RouteItem> = {
   },
   settings: {
     path: '/settings',
-    Element: SignUpPage,//SettingsPage,
+    Element: SettingsPage,
     private: true,
   },
   createArticle: {
